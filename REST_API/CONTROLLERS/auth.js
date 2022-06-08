@@ -64,7 +64,13 @@ exports.login = async (req, res) => {
 
 exports.logout = (req, res) => {
     console.log(req.cookies)
-    res.clearCookie("jwt");
+    const cookieOptions = {
+        sameSite: "None",
+        secure: true,
+        httpOnly: false
+    }
+    res.clearCookie("jwt", cookieOptions);
+
     res.send({ message: "log out successful" });
 }
 

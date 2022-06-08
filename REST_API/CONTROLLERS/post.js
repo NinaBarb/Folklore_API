@@ -47,6 +47,12 @@ exports.createStory = async (req, res) => {
     if (warnings != null) {
         addWarningsToStory(storyID, warnings)
     }
+    try {
+        res.status(200).send({ message: "Story created" });
+    } catch (error) {
+        return res.status(400).send({ message: error });
+    }
+
     // for (const post of posts) {
     //     var postID = await dbOperations.createPost(post.content, null, storyID);
     //     postsOBJs.push({ "postID": postID, "conditions": post.conditions });
@@ -107,7 +113,7 @@ exports.addCommentToStory = async (req, res) => {
         await dbOperations.addCommentToStory(comment, userID, idStory)
         res.status(200).send({ message: "Comment added to story" });
     } catch (error) {
-        return res.status(400).send(error);
+        return res.status(400).send({ message: error });
     }
 }
 
@@ -118,7 +124,7 @@ exports.addScoreToStory = async (req, res) => {
         await dbOperations.addScoreToStory(score, userID, idStory)
         res.status(200).send({ message: "Score added to story" });
     } catch (error) {
-        return res.status(400).send(error);
+        return res.status(400).send({ message: error });
     }
 }
 
@@ -128,6 +134,6 @@ exports.getUserStoryScore = async (req, res) => {
     try {
         res.status(200).send(await dbOperations.getUserStoryScore(userID, idStory));
     } catch (error) {
-        return res.status(400).send(error);
+        return res.status(400).send({ message: error });
     }
 }
